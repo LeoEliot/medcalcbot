@@ -22,4 +22,4 @@ spring:
     defer-datasource-initialization: true
 bot:
   name: "PavelLazyBot"
-  token: "8423130747:AAHfyAOFErPNudvaoDXaFHaURhU4UP4SWWM"
+  token: ${BOT_TOKEN:}
