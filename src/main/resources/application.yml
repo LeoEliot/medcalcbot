@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: MedCalcHelp
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/data.sql
+  datasource:
+    url: ${POSTGRES_JDBC_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_PASSWORD:postgres}
+    password: ${POSTGRES_DB:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 1
+      auto-commit: false
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+bot:
+  name: "PavelLazyBot"
+  token: "8423130747:AAHfyAOFErPNudvaoDXaFHaURhU4UP4SWWM"
