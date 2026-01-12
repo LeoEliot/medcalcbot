@@ -2,6 +2,7 @@ package com.malef.medcalcbot.telegram;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.malef.medcalcbot.DTO.DoseType;
 import com.malef.medcalcbot.DTO.MedicineDTO;
 import com.malef.medcalcbot.config.BotProps;
 import com.malef.medcalcbot.data.entity.Medicine;
@@ -25,16 +26,18 @@ import java.util.List;
 @Slf4j
 public class TelegramBot extends TelegramLongPollingBot {
 
-    private final static ObjectMapper mapper = new ObjectMapper();
     public final BotProps botProps;
 
 
 
     @Autowired
     private final StartCommand command;
+
+    @Autowired
+    private final MedicineService serv;
+
     @Override
     public String getBotUsername() {
-        log.info("Bot Name {}", botProps.getName());
         return botProps.getName();
     }
 
@@ -49,6 +52,28 @@ public class TelegramBot extends TelegramLongPollingBot {
         if(update.hasMessage() && update.getMessage().hasText()) {
 
             SendMessage message = command.handleUpdate(update);
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                log.error(e.getMessage());
+            }
+        } else if (update.hasCallbackQuery()) {
+            String call_data = update.getCallbackQuery().getData();
+            Long chatId = update.getCallbackQuery().getMessage().getChatId();
+            MedicineDTO med = serv.findMedicineByName(call_data);
+            SendMessage message = new SendMessage();
+            message.setChatId(chatId);
+            StringBuilder builder = new StringBuilder();
+            builder.append(med.getTitle() + "\n");
+            builder.append("Дозировка: " + med.getChildDose());
+            if (med.getDoseType() == DoseType.AGE) {
+                builder.append("мл/год");
+            } else {
+                builder.append("мг/кг");
+            }
+            message.setText(builder.toString());
+            List<Medicine> meds = serv.findAll();
+            message.setReplyMarkup(command.createKeyboard(meds));
             try {
                 execute(message);
             } catch (TelegramApiException e) {

@@ -19,7 +19,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
 
     public MedicineDTO findMedicineByName(String title) {
         return em.createQuery("""
-                        select new com.malef.medcalcbot.DTO.MedicineDTO(p.id, p.title,p.child,p.type)
+                        select new com.malef.medcalcbot.DTO.MedicineDTO(p.id, p.title,p.childDose,p.doseType)
                         from Medicine p
                         where p.title = :title
                     """,MedicineDTO.class)

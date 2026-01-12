@@ -1,15 +1,17 @@
 package com.malef.medcalcbot.data.entity;
 
 
-import com.malef.medcalcbot.DTO.CalcType;
+import com.malef.medcalcbot.DTO.DoseType;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @Entity
 @Table (name = "medicines")
 public class Medicine {
@@ -20,11 +22,11 @@ public class Medicine {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "child", nullable = false)
-    private String child;
+    @Column(name = "child_dose", nullable = false)
+    private String childDose;
 
-    @Column(name = "type")
-    private @Enumerated(EnumType.STRING)
-    CalcType type;
+    @Column(name = "dose_type")
+    @Enumerated(EnumType.STRING)
+    private DoseType doseType;
 }
 

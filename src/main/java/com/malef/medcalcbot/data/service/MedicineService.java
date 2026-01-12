@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class MedicineService {
 
+
     private final MedicineRepository medicineRepository;
 
     @Autowired

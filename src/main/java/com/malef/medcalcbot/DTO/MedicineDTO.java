@@ -10,8 +10,8 @@ public class MedicineDTO {
 
     private final String title;
 
-    private final String child;
+    private final String childDose;
 
-    private final CalcType type;
+    private final DoseType doseType;
 
 }
