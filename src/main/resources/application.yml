@@ -1,4 +1,7 @@
 spring:
+  config:
+    import:
+      optional:file:.env[.properties]
   application:
     name: MedCalcHelp
   sql:
@@ -22,4 +25,4 @@ spring:
     defer-datasource-initialization: true
 bot:
   name: "PavelLazyBot"
-  token: ${BOT_TOKEN:}
+  token: ${BOT_TOKEN}
